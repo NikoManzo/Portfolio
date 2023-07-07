@@ -1,0 +1,142 @@
+
+load("~/Downloads/final.rdata") library(dplyr)
+##
+## Attaching package: ’dplyr’
+ #1.1
+immigration_rate<-data$migration/data$population summary(immigration_rate)
+ ##1.2
+mean(immigration_rate[data$year== 2017], na.rm = TRUE)
+ ##The mean immigration rate in 2017 is .005958742
+##1.3
+median(immigration_rate[data$country== "Belgium"], na.rm = TRUE)
+##The median immigration rate for Belgium is .0090629
+##1.4
+##FINISH LAST
+##2.1
+cor.test(data$gini, data$literacy, na.rm= TRUE)
+1
+##
+##  Pearson’s product-moment correlation
+##
+## data:  data$gini and data$literacy
+## t = -2.8905, df = 62, p-value = 0.005295
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.5443106 -0.1079432
+## sample estimates:
+##        cor
+## -0.3446088
+ ##Given that the correlation coefficient is -.03446088, there is a weak negative
+##Correlation between the two, so as more people can read, the less equality
+##there is and vice versa.
+##2.2 Given that the p-value is .005295, it can be inferred that there is a high
+##level of significance between the two.
+##2.3
+gre_lit<-data$literacy[data$country== "Greece"] gre_gini<-data$literacy[data$country== "Greece"] cor.test(gre_lit, gre_gini, na.rm= TRUE)
+##
+##  Pearson’s product-moment correlation
+##
+## data:  gre_lit and gre_gini
+## t = Inf, df = 6, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  1 1
+## sample estimates:
+## cor
+##   1
+ ## The results are not the same as questions one and two, as that correlation
+## test showed a slight negative correlation Greece is showing direct
+## correlation as the coefficient is 1. With regards to question two, the p-
+## value is 2.2e-16, which is one of the smallest numbers i have ever seen,
+## which shows a ton of significance
+##3.1
+library(dplyr) newdata<-data %>%
+filter(year > 1985) %>%
+arrange(country) ##3.2
+library(ggplot2) ggdata<-newdata%>%
+group_by(year)%>% summarize(gdp=mean(gdp, na.rm = TRUE),
+gini=mean(gini, na.rm = TRUE))
+## ‘summarise()‘ ungrouping output (override with ‘.groups‘ argument)
+2
+
+ head(ggdata)
+## # A tibble: 6 x 3
+##    year   gdp  gini
+##   <int> <dbl> <dbl>
+## 1  1986  24.8  32.6
+## 2  1987  25.5  30.4
+## 3  1988  26.4  30.8
+## 4  1989  26.9  38.1
+## 5  1990  25.7  31.8
+## 6  1991  25.4  31.0
+ ##4.1
+ggplot(data = ggdata, aes(x=year, y=gdp)) + geom_line() +
+xlab("Year") +
+ylab("GDP Growth") +
+ggtitle("GDP Growth Over Time") + theme_bw() +
+theme(panel.grid = element_blank())
+## Warning: Removed 1 row(s) containing missing values (geom_path).
+ GDP Growth Over Time
+36
+32
+28
+ 1990 2000
+2010 2020
+Year
+3
+GDP Growth
+
+ ##4.2
+ggplot(data = ggdata, aes(x=year)) + geom_line(aes(y=gdp, linetype="GDP")) + geom_line(aes(y=gini, linetype="Gini")) + xlab("Year") +
+ylab("Gini and GDP") +
+ggtitle("GDP and Gini over Time") + theme_bw() +
+theme(panel.grid = element_blank())
+## Warning: Removed 1 row(s) containing missing values (geom_path).
+## Warning: Removed 2 row(s) containing missing values (geom_path).
+ GDP and Gini over Time
+40
+35
+30
+25
+   1990 2000
+2010 2020
+Year
+linetype GDP
+Gini
+ ##5.1
+model<-lm(highschool~ gdp + gini + literacy, data=data) summary(model)
+##
+## Call:
+## lm(formula = highschool ~ gdp + gini + literacy, data = data)
+##
+## Residuals:
+##     Min      1Q  Median      3Q     Max
+4
+Gini and GDP
+
+## -29.023  -8.816  -4.213   6.428  38.154
+##
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)
+## (Intercept) -163.6667
+## gdp           -0.8451
+## gini          -1.0353
+## literacy       2.7763
+## ---
+46.1689  -3.545 0.000851 ***
+ 0.2743  -3.081 0.003324 **
+ 0.3105  -3.335 0.001597 **
+ 0.4692   5.917 2.76e-07 ***
+## Signif. codes:  0 ’***’ 0.001 ’**’ 0.01 ’*’ 0.05 ’.’ 0.1 ’ ’ 1
+##
+## Residual standard error: 14.66 on 51 degrees of freedom
+##   (2395 observations deleted due to missingness)
+## Multiple R-squared:  0.5025, Adjusted R-squared:  0.4732
+## F-statistic: 17.17 on 3 and 51 DF,  p-value: 7.736e-08
+##5.2
+##Given that there is multiple stars for each y-value, it can be inferred that
+##GDP, Income inequality, and literacy rates all correlate to high school
+##Graduation rates
+##5.3
+##For every additional percent that a nation’s population is literate, we can
+##expect graduation rates to go up by 2.7763 percent.
