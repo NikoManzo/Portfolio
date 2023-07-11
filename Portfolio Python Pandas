@@ -1,0 +1,65 @@
+Df = pd.read_csv(‘supermarket_sales.csv’)
+
+Head to get first how many rows, tail to get last how many rows. 
+
+df.dtypes to see the columns. 
+
+Df(‘date’) = pd.to_datetime[df(‘date’])
+
+df(describe) gives mean count std min 25-75 percentiles max 
+
+Sns.distplot(df[‘Rating’])
+Plt.axvline(x=np.mean(df[‘Rating]), c=‘red’, ls=‘ - - ‘)
+Plt.axline(x+np/.percentile(df[“rating’], 25, c=‘green’
+Can do same for 75 vy just switching 25 to 75 
+Put.legend()
+
+
+df.hist(fig size=(10,10))
+
+sns.countplot(df[‘Branch’, ylabel=‘count’>
+
+df[‘Branch’]. Value_counts()
+
+##Can use for any value oriented graph to get numerical data 
+
+BIVARIATE ANALYSIS 
+
+Sns.scatterplot(df[‘Rating’], df[‘gross income’ ] )
+
+Sis.boxplot(x=df[‘Branch’] y=df[‘Gross income’])
+
+Sns.boxplot(x-df[‘Gender’], y=df[‘gross income])
+
+df.groupby(df.index).mean()
+
+Sis.lineplot(x=df.groupby(df.index) .mean(). Index, 
+		y=df.groupby(df.index) . Mean() [‘gross income’])
+
+sns.pairplot(df)
+
+
+
+df.duplicated() . Sum()
+
+Df[df.duplicated()==True]
+
+df.drop_duplicates(inplace=True)
+
+df.isna().sum()
+
+Sis.heatmap(df.isnull()) cbar=false
+
+df.fillna(df.mean(), inplace=True)
+
+df.fillna(df.mode().iloc[0], inplace=True)
+
+Dataset = pd.read_csv(‘supermarket_sales.csv’)
+prof= ProfileReport(dataset)
+Prof
+
+np.corrcoef(df[‘gross income’], df[‘Rating’]) [1][0]
+
+np.round(df.corr(), 2)
+
+sns.heatmap(np.round(df.corr(), 2), annot=True)
